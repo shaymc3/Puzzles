@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Water Jug Puzzle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    .jug {
+      border: 2px solid #333;
+      display: inline-block;
+      margin: 10px;
+      padding: 20px;
+      width: 100px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Water Jug Puzzle</h1>
+  <p>Goal: Get exactly 4 liters in one of the jugs.</p>
+
+  <div class="jug">
+    <h3>Jug A (3L)</h3>
+    <p id="jugA">0</p>
+    <button onclick="fillA()">Fill</button>
+    <button onclick="emptyA()">Empty</button>
+    <button onclick="pourAtoB()">Pour to B</button>
+  </div>
+
+  <div class="jug">
+    <h3>Jug B (5L)</h3>
+    <p id="jugB">0</p>
+    <button onclick="fillB()">Fill</button>
+    <button onclick="emptyB()">Empty</button>
+    <button onclick="pourBtoA()">Pour to A</button>
+  </div>
+
+  <p id="message"></p>
+
+  <script>
+    let jugA = 0;
+    let jugB = 0;
+
+    function updateDisplay() {
+      document.getElementById("jugA").innerText = jugA + " L";
+      document.getElementById("jugB").innerText = jugB + " L";
+
+      if (jugA === 4 || jugB === 4) {
+        document.getElementById("message").innerText = "You won! You have exactly 4 liters!";
+      } else {
+        document.getElementById("message").innerText = "";
+      }
+    }
+
+    function fillA() {
+      jugA = 3;
+      updateDisplay();
+    }
+
+    function fillB() {
+      jugB = 5;
+      updateDisplay();
+    }
+
+    function emptyA() {
+      jugA = 0;
+      updateDisplay();
+    }
+
+    function emptyB() {
+      jugB = 0;
+      updateDisplay();
+    }
+
+    function pourAtoB() {
+      let spaceInB = 5 - jugB;
+      let transfer = Math.min(jugA, spaceInB);
+      jugA -= transfer;
+      jugB += transfer;
+      updateDisplay();
+    }
+
+    function pourBtoA() {
+      let spaceInA = 3 - jugA;
+      let transfer = Math.min(jugB, spaceInA);
+      jugB -= transfer;
+      jugA += transfer;
+      updateDisplay();
+    }
+
+    updateDisplay();
+  </script>
+
+</body>
+</html>
