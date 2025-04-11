@@ -44,6 +44,7 @@
 
       const input = document.getElementById("floorInput");
       const floor = parseInt(input.value);
+      
       if (isNaN(floor) || floor < 1 || floor > 100) {
         alert("Please enter a valid floor number between 1 and 100.");
         return;
@@ -67,6 +68,7 @@
       if (floor === secretFloor - 1) {
         document.getElementById("result").textContent = `Congratulations! The highest safe floor is ${floor}. You found it in ${attempts} attempts.`;
       }
+      
     }
   </script>
 </body>
