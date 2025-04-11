@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>2-Ball 100-Floor Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f0f0f0;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px 0;
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>2-Ball 100-Floor Game</h1>
+  <p>Try to find the highest floor from which the ball will NOT break. You have only 2 balls!</p>
+  <p>Enter a floor number (1 to 100):</p>
+  <input type="number" id="floorInput" min="1" max="100">
+  <button onclick="throwBall()">Throw Ball</button>
+
+  <p>Attempts: <span id="attempts">0</span></p>
+  <p>Balls remaining: <span id="ballsLeft">2</span></p>
+  <p id="result"></p>
+
+  <script>
+    const secretFloor = 41; // Ball breaks at floor 41 and above
+    let attempts = 0;
+    let balls = 2;
+    let maxSafeFloor = 0;
+
+    function throwBall() {
+      if (balls === 0) {
+        document.getElementById("result").textContent = "No balls left. Game over!";
+        return;
+      }
+
+      const input = document.getElementById("floorInput");
+      const floor = parseInt(input.value);
+      if (isNaN(floor) || floor < 1 || floor > 100) {
+        alert("Please enter a valid floor number between 1 and 100.");
+        return;
+      }
+
+      attempts++;
+      document.getElementById("attempts").textContent = attempts;
+
+      if (floor >= secretFloor) {
+        balls--;
+        document.getElementById("ballsLeft").textContent = balls;
+        document.getElementById("result").textContent = `Ball broke at floor ${floor}.`;
+        if (balls === 0) {
+          document.getElementById("result").textContent += " You are out of balls!";
+        }
+      } else {
+        maxSafeFloor = Math.max(maxSafeFloor, floor);
+        document.getElementById("result").textContent = `Ball survived at floor ${floor}. Keep going!`;
+      }
+
+      if (floor === secretFloor - 1) {
+        document.getElementById("result").textContent = `Congratulations! The highest safe floor is ${floor}. You found it in ${attempts} attempts.`;
+      }
+    }
+  </script>
+</body>
+</html>
